@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World of Light</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Three.js canvas renders here -->
+  <div id="canvas-container"></div>
+
+  <!-- Main UI Overlay -->
+  <div id="overlay">
+    <!-- Light count indicator -->
+    <div id="light-count" aria-live="polite">
+      <span id="light-icon">✦</span>
+      <span id="light-count-number">0</span> lights in the world
+    </div>
+
+    <!-- Main content panel -->
+    <div id="main-panel">
+      <h1>World of Light</h1>
+      <p class="body-copy">
+        Every prayer adds light.<br />
+        This world is illuminated by shared intentions.<br />
+        Choose your intention below and send it into the universe.<br />
+        Your light becomes part of the whole.
+      </p>
+
+      <!-- Prayer type selection -->
+      <div id="prayer-type-section">
+        <div class="btn-group" role="group" aria-label="Prayer type">
+          <button type="button" class="btn-prayer-type active" data-type="self" aria-pressed="true">A prayer for myself</button>
+          <button type="button" class="btn-prayer-type" data-type="other" aria-pressed="false">A prayer for someone else</button>
+        </div>
+      </div>
+
+      <!-- Name field (shown when "someone else" is selected) -->
+      <div id="name-section" class="hidden">
+        <label for="recipient-name">Name <span class="optional">(optional)</span></label>
+        <input type="text" id="recipient-name" placeholder="Who is this prayer for?" maxlength="100" autocomplete="off" />
+      </div>
+
+      <!-- Email notification section -->
+      <div id="email-section" class="hidden">
+        <div id="email-toggle-wrapper">
+          <label class="toggle-label" for="email-toggle">
+            <span>Let them know a prayer was sent</span>
+            <span class="toggle-switch">
+              <input type="checkbox" id="email-toggle" />
+              <span class="toggle-slider"></span>
+            </span>
+          </label>
+        </div>
+        <div id="email-fields" class="hidden">
+          <input type="email" id="recipient-email" placeholder="Their email address" autocomplete="off" />
+          <p class="email-note">Email notification coming in a future version. Your intent is still received.</p>
+        </div>
+      </div>
+
+      <!-- Visibility controls -->
+      <div id="visibility-section">
+        <p class="section-label">How would you like your prayer to appear?</p>
+        <div class="radio-group" role="radiogroup" aria-label="Visibility">
+          <label class="radio-option">
+            <input type="radio" name="visibility" value="public" checked />
+            <span class="radio-custom"></span>
+            <span class="radio-text">Show my prayer publicly</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="visibility" value="anonymous" />
+            <span class="radio-custom"></span>
+            <span class="radio-text">Show publicly, but anonymous</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="visibility" value="beam" />
+            <span class="radio-custom"></span>
+            <span class="radio-text">Only add my beam of light</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Prayer text -->
+      <div id="prayer-text-section">
+        <label for="prayer-text">Your intention <span class="optional">(optional)</span></label>
+        <textarea id="prayer-text" rows="3" maxlength="400" placeholder="Write your prayer or intention here…"></textarea>
+        <div id="char-counter"><span id="char-count">0</span> / 400</div>
+      </div>
+
+      <!-- Submit button -->
+      <button type="button" id="submit-prayer" aria-label="Send your prayer">Send into the universe</button>
+    </div>
+
+    <!-- Thank you message (hidden by default) -->
+    <div id="thank-you-panel" class="hidden">
+      <div class="thank-you-content">
+        <div class="thank-you-icon">✦</div>
+        <h2>Your prayer has been received.</h2>
+        <p>Thank you for adding your light to the world.</p>
+        <button type="button" id="send-another" aria-label="Send another prayer">Send another light</button>
+      </div>
+    </div>
+
+    <!-- Recent intentions panel -->
+    <div id="recent-panel" class="hidden">
+      <h3>Recent Intentions</h3>
+      <p class="mvp-note">Showing intentions from this session (MVP local display)</p>
+      <div id="recent-list"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
