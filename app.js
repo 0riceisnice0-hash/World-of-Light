@@ -55,7 +55,41 @@
   const globeGroup = new THREE.Group();
   scene.add(globeGroup);
 
-  // Globe wireframe sphere
+  // Planet surface sphere (solid, behind wireframe)
+  const planetGeo = new THREE.SphereGeometry(
+    CONFIG.globeRadius * 0.995,
+    64,
+    64
+  );
+  
+  // Create planet material with a simple blue ocean color as base
+  const planetMat = new THREE.MeshBasicMaterial({
+    color: 0x1a4d7a, // Deep ocean blue
+  });
+  
+  // Try to load Earth texture from a reliable source
+  const textureLoader = new THREE.TextureLoader();
+  textureLoader.crossOrigin = 'anonymous';
+  
+  textureLoader.load(
+    'https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57752/land_shallow_topo_2048.jpg',
+    function(texture) {
+      // Success - apply the Earth texture
+      planetMat.map = texture;
+      planetMat.needsUpdate = true;
+    },
+    undefined,
+    function(error) {
+      // Fallback - the material already has a blue color
+      // This provides a simple but recognizable planet appearance
+      console.log('Using fallback blue planet color');
+    }
+  );
+  
+  const planet = new THREE.Mesh(planetGeo, planetMat);
+  globeGroup.add(planet);
+
+  // Globe wireframe sphere (on top of planet surface)
   const globeGeo = new THREE.SphereGeometry(
     CONFIG.globeRadius,
     CONFIG.globeSegments,
