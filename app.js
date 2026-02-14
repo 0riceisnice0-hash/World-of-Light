@@ -22,6 +22,8 @@
     cameraDistance: 6.5,
     starCount: 800,
     maxCharCount: 400,
+    planetTextureUrl: 'https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57752/land_shallow_topo_2048.jpg',
+    planetFallbackColor: 0x1a4d7a,
   };
 
   // ── State ──────────────────────────────────
@@ -64,15 +66,15 @@
   
   // Create planet material with a simple blue ocean color as base
   const planetMat = new THREE.MeshBasicMaterial({
-    color: 0x1a4d7a, // Deep ocean blue
+    color: CONFIG.planetFallbackColor, // Deep ocean blue
   });
   
   // Try to load Earth texture from a reliable source
   const textureLoader = new THREE.TextureLoader();
-  textureLoader.crossOrigin = 'anonymous';
+  textureLoader.setCrossOrigin('anonymous');
   
   textureLoader.load(
-    'https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57752/land_shallow_topo_2048.jpg',
+    CONFIG.planetTextureUrl,
     function(texture) {
       // Success - apply the Earth texture
       planetMat.map = texture;
@@ -82,7 +84,7 @@
     function(error) {
       // Fallback - the material already has a blue color
       // This provides a simple but recognizable planet appearance
-      console.log('Using fallback blue planet color');
+      console.warn('Failed to load Earth texture, using fallback color:', error);
     }
   );
   
