@@ -104,9 +104,9 @@
   const globe = new THREE.Mesh(globeGeo, globeMat);
   globeGroup.add(globe);
 
-  // Inner glow sphere
+  // Inner glow sphere (subtle glow between planet and wireframe)
   const innerGlowGeo = new THREE.SphereGeometry(
-    CONFIG.globeRadius * 0.98,
+    CONFIG.globeRadius * 0.998,
     32,
     32
   );
